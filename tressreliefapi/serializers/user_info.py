@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from models import UserInfo
+from tressreliefapi.models import UserInfo
 
 
-class UserInfoSerializer(serializers.ModelSerialzier):
+class UserInfoSerializer(serializers.ModelSerializer):
     """JSON Serializer for user info"""
     class Meta:
         model = UserInfo
