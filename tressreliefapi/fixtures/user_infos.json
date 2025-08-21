@@ -1,0 +1,50 @@
+[
+  {
+    "model": "tressreliefapi.UserInfo",
+    "pk": 2,
+    "fields": {
+      "uid": "ymiqRWII4OTM12eyt1Kn8LUpwaB2",
+      "display_name": "Alyssa C.",
+      "google_email": "alyssamariecleland@gmail.com",
+      "role": "admin",
+      "created_at": "2025-08-20T05:22:49.082333Z",
+      "updated_at": "2025-08-20T05:22:49.082427Z"
+    }
+  },
+    {
+    "model": "tressreliefapi.UserInfo",
+    "pk": 3,
+    "fields": {
+      "uid": "510g4e53UHUxORxYvjktjTl8z7j2",
+      "display_name": "Alyssa2 C2",
+      "google_email": "alyssamaricleland@gmail.com",
+      "role": "client",
+      "created_at": "2025-08-20T05:22:49.082333Z",
+      "updated_at": "2025-08-20T05:22:49.082427Z"
+    }
+  },
+      {
+    "model": "tressreliefapi.UserInfo",
+    "pk": 4,
+    "fields": {
+      "uid": "At6BszMxlqYDCmXwTWAruWqNyc32",
+      "display_name": "Alyssa Cleland",
+      "google_email": "braidbabelyss@gmail.com",
+      "role": "stylist",
+      "created_at": "2025-08-20T05:22:49.082333Z",
+      "updated_at": "2025-08-20T05:22:49.082427Z"
+    }
+  },
+        {
+    "model": "tressreliefapi.UserInfo",
+    "pk": 5,
+    "fields": {
+      "uid": "Xcv6ssmbwEW5k42UV4g7OppncKD3",
+      "display_name": "testprojectnss3",
+      "google_email": "testprojectnss3@gmail.com",
+      "role": "stylist",
+      "created_at": "2025-08-20T05:22:49.082333Z",
+      "updated_at": "2025-08-20T05:22:49.082427Z"
+    }
+  }
+]
