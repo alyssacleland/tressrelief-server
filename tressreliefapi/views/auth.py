@@ -20,9 +20,17 @@ def get_or_create_user(request):
     if not uid:
         return Response({"detail": "Missing uid"}, status=status.HTTP_400_BAD_REQUEST)
 
+    # user, created = UserInfo.objects.get_or_create(uid=uid)
+
+    # if created:
+    #   user.display_name = request.data.get("display_name") or ""
+    #   user.google_email = request.data.get("google_email") or ""
+    #   # role is already defaulted to client in the model
+
     defaults = {
         "display_name": request.data.get("display_name") or "",
         "google_email": request.data.get("google_email") or "",
+        # role is already defaulted to client in the model
     }
 
     user, _ = UserInfo.objects.get_or_create(uid=uid, defaults=defaults)
