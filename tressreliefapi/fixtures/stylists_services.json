@@ -1,0 +1,28 @@
+[
+  { "model": "tressreliefapi.stylistservice", "pk": 1,  "fields": { "stylist": 4, "service": 1 } },
+  { "model": "tressreliefapi.stylistservice", "pk": 2,  "fields": { "stylist": 5, "service": 1 } },
+
+  { "model": "tressreliefapi.stylistservice", "pk": 3,  "fields": { "stylist": 4, "service": 2 } },
+  { "model": "tressreliefapi.stylistservice", "pk": 4,  "fields": { "stylist": 5, "service": 2 } },
+
+  { "model": "tressreliefapi.stylistservice", "pk": 5,  "fields": { "stylist": 4, "service": 3 } },
+  { "model": "tressreliefapi.stylistservice", "pk": 6,  "fields": { "stylist": 5, "service": 3 } },
+
+  { "model": "tressreliefapi.stylistservice", "pk": 7,  "fields": { "stylist": 4, "service": 4 } },
+  { "model": "tressreliefapi.stylistservice", "pk": 8,  "fields": { "stylist": 5, "service": 4 } },
+
+  { "model": "tressreliefapi.stylistservice", "pk": 9,  "fields": { "stylist": 4, "service": 5 } },
+  { "model": "tressreliefapi.stylistservice", "pk": 10, "fields": { "stylist": 5, "service": 5 } },
+
+  { "model": "tressreliefapi.stylistservice", "pk": 11, "fields": { "stylist": 4, "service": 6 } },
+  { "model": "tressreliefapi.stylistservice", "pk": 12, "fields": { "stylist": 5, "service": 6 } },
+
+  { "model": "tressreliefapi.stylistservice", "pk": 13, "fields": { "stylist": 4, "service": 7 } },
+  { "model": "tressreliefapi.stylistservice", "pk": 14, "fields": { "stylist": 5, "service": 7 } },
+
+  { "model": "tressreliefapi.stylistservice", "pk": 15, "fields": { "stylist": 4, "service": 8 } },
+  { "model": "tressreliefapi.stylistservice", "pk": 16, "fields": { "stylist": 5, "service": 8 } },
+
+  { "model": "tressreliefapi.stylistservice", "pk": 17, "fields": { "stylist": 4, "service": 9 } },
+  { "model": "tressreliefapi.stylistservice", "pk": 18, "fields": { "stylist": 5, "service": 10 } }
+]
