@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from tressreliefapi.views import get_or_create_user, UserInfoView
+from tressreliefapi.views import get_or_create_user, UserInfoView, CategoryView
 
 
 # The first parameter, r'userinfo, is setting up the url.
@@ -10,6 +10,7 @@ from tressreliefapi.views import get_or_create_user, UserInfoView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'userinfo', UserInfoView, 'userinfo')
+router.register(r'categories', CategoryView, 'category')
 
 # Each path() in urlpatterns is mapping a URL pattern to a view — which is just the code that runs when someone visits that URL.
 urlpatterns = [
