@@ -2,7 +2,7 @@ from rest_framework import serializers
 from tressreliefapi.models import StylistService
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class StylistServiceSerializer(serializers.ModelSerializer):
     """JSON Serializer for stylist_service join table"""
 
     class Meta:
