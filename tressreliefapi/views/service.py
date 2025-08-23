@@ -35,8 +35,8 @@ class ServiceView(ViewSet):
 
     def retrieve(self, request, pk):
         """Handle GET requests for single service"""
-        service = Service.objects.get(pk=pk)
         try:
+            service = Service.objects.get(pk=pk)
             serializer = ServiceSerializer(service)
             return Response(serializer.data)
         except Service.DoesNotExist as ex:
