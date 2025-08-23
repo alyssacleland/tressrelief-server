@@ -4,6 +4,8 @@ from rest_framework import status
 from tressreliefapi.models import UserInfo
 from tressreliefapi.serializers import UserInfoSerializer
 
+# /get-or-create-user
+
 
 @api_view(["POST"])
 def get_or_create_user(request):

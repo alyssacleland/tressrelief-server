@@ -8,6 +8,8 @@ from tressreliefapi.serializers import CategorySerializer
 
 
 class CategoryView(ViewSet):
+
+    # /categories
     def list(self, request):
         """
         Handle GET requests for categories
@@ -16,6 +18,7 @@ class CategoryView(ViewSet):
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
 
+    # /categories/:id
     def retrieve(self, request, pk):
         """Handle GET requests for single category"""
         category = Category.objects.get(pk=pk)
