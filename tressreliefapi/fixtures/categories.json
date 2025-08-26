@@ -5,7 +5,7 @@
     "fields": {
       "name": "Braids",
       "description": "Variety of styles and creative braid options.",
-      "image_url": "",
+      "image_url": "/images/cat-braids.png",
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
     }
@@ -16,7 +16,7 @@
     "fields": {
       "name": "Feedins",
       "description": "Festival-ready feed-in braids.",
-      "image_url": "",
+      "image_url": "/images/cat-feedins.png",
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
     }
@@ -27,7 +27,7 @@
     "fields": {
       "name": "Tinsel",
       "description": "Sparkling hair tinsel for everyday glam or special events.",
-      "image_url": "",
+      "image_url": "/images/tinsel80.png",
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
     }
@@ -38,7 +38,7 @@
     "fields": {
       "name": "Parties",
       "description": "Braid and tinsel services for celebrations and events. Bachelorettes, birthdays, or just because parties!",
-      "image_url": "",
+      "image_url": "/images/cat-party01.png",
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
     }
