@@ -8,7 +8,7 @@
       "description": "Classic braid appointment.",
       "duration": 60,
       "price": 70,
-      "image_url": "https://github.com/alyssacleland/tressrelief-client/blob/main/public/images/apptbraid.png",
+      "image_url": "c/images/apptbraid.png",
       "active": true,
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
@@ -23,7 +23,7 @@
       "description": "Braids finished with curls and elegance.",
       "duration": 90,
       "price": 90,
-      "image_url": "https://github.com/alyssacleland/tressrelief-client/blob/main/public/images/braidcurls-bridal.png",
+      "image_url": "/images/braidcurls-bridal.png",
       "active": true,
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
@@ -38,7 +38,7 @@
       "description": "Braids combined with 20 strands of sparkling tinsel.",
       "duration": 90,
       "price": 90,
-      "image_url": "https://github.com/alyssacleland/tressrelief-client/blob/main/public/images/braidandtinsel.png",
+      "image_url": "/images/braidandtinsel.png",
       "active": true,
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
@@ -54,7 +54,7 @@
       "description": "Group party service with choice of paty braid or 15 tinsel strands per guest.",
       "duration": 150,
       "price": 200,
-      "image_url": "https://github.com/alyssacleland/tressrelief-client/blob/main/public/images/5party.png",
+      "image_url": "/images/5party.png",
       "active": true,
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
@@ -69,7 +69,7 @@
       "description": "Larger group party service with choice of party braid or 15 tinsel strands per guest.",
       "duration": 300,
       "price": 400,
-      "image_url": "https://github.com/alyssacleland/tressrelief-client/blob/main/public/images/party10.png",
+      "image_url": "/images/party10.png",
       "active": true,
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
@@ -100,7 +100,7 @@
       "description": "Add color pop to your braids, no added length. Max of 3 braids on your head. For more intricate festival feedins, please select full feedins instead.",
       "duration": 60,
       "price": 90,
-      "image_url": "https://github.com/alyssacleland/tressrelief-client/blob/main/public/images/feedinparty.png",
+      "image_url": "/images/feedinparty.png",
       "active": true,
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
@@ -115,7 +115,7 @@
       "description": "Think fabulous festival feedins. Add color to a more intricate braid style and/or add length",
       "duration": 130,
       "price": 130,
-      "image_url": "https://github.com/alyssacleland/tressrelief-client/blob/main/public/images/feedin-appt.png",
+      "image_url": "/images/feedin-appt.png",
       "active": true,
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
@@ -131,7 +131,7 @@
       "description": "Add 40 strands of sparkling hair tinsel.",
       "duration": 60,
       "price": 90,
-      "image_url": "https://github.com/alyssacleland/tressrelief-client/blob/main/public/images/tinsel40.png",
+      "image_url": "/images/tinsel40.png",
       "active": true,
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
@@ -146,7 +146,7 @@
       "description": "Add 80 strands of sparkling hair tinsel.",
       "duration": 120,
       "price": 180,
-      "image_url": "https://github.com/alyssacleland/tressrelief-client/blob/main/public/images/tinsel80.png",
+      "image_url": "/images/tinsel80.png",
       "active": true,
       "created_at": "2025-01-01T00:00:00Z",
       "updated_at": "2025-01-01T00:00:00Z"
