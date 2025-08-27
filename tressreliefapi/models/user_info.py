@@ -14,6 +14,7 @@ class UserInfo(models.Model):
     # blank=True: means field not required (it's allowed to be blank)
     display_name = models.CharField(max_length=255, blank=True)
     google_email = models.EmailField(blank=True)
+    photo_url = models.URLField(max_length=500, blank=True, null=True)
     # default or updated:
     role = models.CharField(
         max_length=20,
