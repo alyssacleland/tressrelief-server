@@ -14,7 +14,8 @@ def get_or_create_user(request):
       {
         "uid": "<firebase uid>",
         "display_name": "<optional>",
-        "google_email": "<optional>"
+        "google_email": "<optional>",
+        "photo_url": "<optional>"
       }
     Returns the existing user or creates one with role='client'.
     """
@@ -25,7 +26,19 @@ def get_or_create_user(request):
     defaults = {
         "display_name": request.data.get("display_name") or "",
         "google_email": request.data.get("google_email") or "",
+        "photo_url": request.data.get("photo_url") or None,
     }
 
-    user, _ = UserInfo.objects.get_or_create(uid=uid, defaults=defaults)
+    user, created = UserInfo.objects.get_or_create(uid=uid, defaults=defaults)
+    if not created:
+        changed = False
+        for field in ("display_name", "google_email", "photo_url"):
+            incoming = request.data.get(field, None)
+            if incoming is not None and incoming != getattr(user, field):
+                setattr(user, field, incoming)
+                changed = True
+
+        if changed:
+            user.save()
+
     return Response(UserInfoSerializer(user).data, status=status.HTTP_200_OK)
