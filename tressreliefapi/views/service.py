@@ -1,4 +1,5 @@
 """View module for handling requests about services"""
+from urllib import request
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
@@ -6,11 +7,12 @@ from rest_framework import serializers, status
 from tressreliefapi.models import Service, Category, StylistService, UserInfo
 from tressreliefapi.serializers import ServiceSerializer, UserInfoSerializer
 from rest_framework.decorators import action
+from rest_framework.views import APIView
 
 
 class ServiceView(ViewSet):
 
-    # /services, /services?category=:id, /services?stylistId=:id
+    # GET /services, /services?category=:id, /services?stylistId=:id
     def list(self, request):
         """
         Handle GET requests for services
@@ -32,7 +34,7 @@ class ServiceView(ViewSet):
         serializer = ServiceSerializer(services, many=True)
         return Response(serializer.data)
 
-    # /services/:id
+    # GET /services/:id
     def retrieve(self, request, pk):
         """Handle GET requests for single service"""
         try:
@@ -42,7 +44,7 @@ class ServiceView(ViewSet):
         except Service.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
-    # /services
+    # POST /services
     def create(self, request):
         """Handle POST operations"""
         category = Category.objects.get(pk=request.data["category"])
@@ -58,10 +60,21 @@ class ServiceView(ViewSet):
             active=request.data.get("active", True)
             # leave out created_at and updated_at because they are set automatically via my model definition
         )
+        # [] is the default value if the key is not found
+        stylist_ids = request.data.get("stylist_ids", [])
+
+        # isinstance() checks if an obj is an instance of a specified class or type. bewlow it checks if stylist_ids is a list.
+        if isinstance(stylist_ids, list) and stylist_ids:
+            StylistService.objects.bulk_create(
+                # set is an unordered collection of unique elements
+                [StylistService(service=service, stylist_id=int(stylistid))
+                 for stylistid in set(stylist_ids)],
+                ignore_conflicts=True,
+            )
         serializer = ServiceSerializer(service)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    # /services/:id
+    # PUT /services/:id
     def update(self, request, pk):
         """Handle PUT requests for a service"""
         try:
@@ -76,11 +89,35 @@ class ServiceView(ViewSet):
             service.active = request.data.get("active", True)
             service.save()
             serializer = ServiceSerializer(service)
+
+            # make all the ids integers and set them equal to desired_ids
+            desired_ids = set(map(int, request.data.get("stylist_ids", [])))
+            # get the existing ids for the service
+            current_ids = set(
+                StylistService.objects.filter(
+                    service=service).values_list("stylist_id", flat=True)
+            )
+            # "calculate" the ids that you want to add/remove. the ones the remain are the ones you want to add/remove
+            to_add = desired_ids - current_ids
+            to_remove = current_ids - desired_ids
+
+            # if to_remove contains any ids, delete them
+            if to_remove:
+                # in is just the keyword used to check if a value exists within an iterable. so it checks if stylist_id matches any of the ids in to_remove
+                StylistService.objects.filter(
+                    service=service, stylist_id__in=to_remove).delete()
+            # if there are any ids to add (if to_add contained any ids, this will be true), create them
+            if to_add:
+                StylistService.objects.bulk_create(
+                    [StylistService(service=service, stylist_id=stylist_id)
+                     for stylist_id in to_add],
+                    ignore_conflicts=True
+                )
             return Response(serializer.data)
         except Service.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
-    # /services/:id
+    # DELETE /services/:id
     def destroy(self, request, pk):
         """Handle DELETE requests for a service"""
         try:
@@ -93,6 +130,7 @@ class ServiceView(ViewSet):
     # get stylists of a service
     # /services/:id/stylists
     # with the action decorator, the router you already registered will auto‑create the URL route stylists
+
     @action(methods=['get'], detail=True)
     def stylists(self, request, pk):
         """Handle GET requests for stylists of a service"""

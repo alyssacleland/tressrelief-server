@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 from tressreliefapi.views import get_or_create_user, UserInfoView, CategoryView, ServiceView
+from tressreliefapi.views.service_stylists_options import ServiceStylistOptions
+from tressreliefapi.views.stylist_service import StylistServiceLinks
 
 
 # The first parameter, r'userinfo, is setting up the url.
@@ -18,4 +20,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path("admin/", admin.site.urls),
     path("get-or-create-user", get_or_create_user),
+    path("stylist-services", StylistServiceLinks.as_view()),
+    path("service-stylist-options", ServiceStylistOptions.as_view()),
 ]
