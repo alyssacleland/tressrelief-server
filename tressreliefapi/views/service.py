@@ -130,7 +130,7 @@ class ServiceView(ViewSet):
     # get stylists of a service
     # /services/:id/stylists
     # with the action decorator, the router you already registered will auto‑create the URL route stylists
-
+    # another way I could have done this: in user_infos, filter by role="stylist" and filter stylist stylists who offer a given service. Is one way better practice?
     @action(methods=['get'], detail=True)
     def stylists(self, request, pk):
         """Handle GET requests for stylists of a service"""
