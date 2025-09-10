@@ -150,8 +150,6 @@ tressrelief-server/
 
 The API uses Firebase Authentication for user management. Users are created or retrieved via the `/get-or-create-user` endpoint, which integrates with Firebase tokens.
 
-Currently configured for development with `AllowAny` permissions. For production, uncomment the token authentication settings in `settings.py`.
-
 ## Dependencies
 
 - **Django**: Web framework
