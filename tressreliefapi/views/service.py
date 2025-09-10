@@ -1,5 +1,5 @@
 """View module for handling requests about services"""
-from urllib import request
+# from urllib import request
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
@@ -57,7 +57,8 @@ class ServiceView(ViewSet):
             price=request.data["price"],
             # default to empty string if not provided. model allows empty with blank=True
             image_url=request.data.get("image_url", ""),
-            active=request.data.get("active", True)
+            active=request.data.get("active", True),
+            owner_uid=request.data.get("owner_uid", None)
             # leave out created_at and updated_at because they are set automatically via my model definition
         )
         # [] is the default value if the key is not found
