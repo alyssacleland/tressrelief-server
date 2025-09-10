@@ -50,5 +50,18 @@
       "created_at": "2025-08-20T05:22:49.082333Z",
       "updated_at": "2025-08-20T05:22:49.082427Z"
     }
+  },
+  {
+    "model": "tressreliefapi.userinfo",
+    "pk": 6,
+    "fields": {
+      "uid": "rd95yndqEYYe0jxCKblTVRk1kuK2",
+      "display_name": "testaccount",
+      "google_email": "oreogoodboy1@gmail.com",
+      "photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJl5MVnXjojfZi-wY9WcB6YVTNOiXGKh4nBEwr1VB33AzBjuw=s96-c",
+      "role": "admin",
+      "created_at": "2025-08-27T00:52:47.562649Z",
+      "updated_at": "2025-08-27T01:12:29.856764Z"
+    }
   }
 ]
