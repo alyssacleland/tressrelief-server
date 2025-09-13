@@ -4,7 +4,7 @@ from rest_framework import routers
 from tressreliefapi.views import get_or_create_user, UserInfoView, CategoryView, ServiceView
 from tressreliefapi.views.service_stylists_options import ServiceStylistOptions
 from tressreliefapi.views.stylist_service import StylistServiceLinks
-
+from tressreliefapi.views.oauth import oauth_google_initiate
 
 # The first parameter, r'userinfo, is setting up the url.
 # The second UserInfoView is telling the server which view to use when it sees that url.
@@ -22,4 +22,5 @@ urlpatterns = [
     path("get-or-create-user", get_or_create_user),
     path("stylist-services", StylistServiceLinks.as_view()),
     path("service-stylist-options", ServiceStylistOptions.as_view()),
+    path("oauth/google/initiate", oauth_google_initiate),
 ]

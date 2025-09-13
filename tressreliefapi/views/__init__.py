@@ -2,3 +2,4 @@ from .auth import get_or_create_user
 from .user_info import UserInfoView
 from .category import CategoryView
 from .service import ServiceView
+from .oauth import oauth_google_initiate
