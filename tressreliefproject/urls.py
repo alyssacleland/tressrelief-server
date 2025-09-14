@@ -5,6 +5,7 @@ from tressreliefapi.views import get_or_create_user, UserInfoView, CategoryView,
 from tressreliefapi.views.service_stylists_options import ServiceStylistOptions
 from tressreliefapi.views.stylist_service import StylistServiceLinks
 from tressreliefapi.views.oauth import oauth_google_initiate
+from tressreliefapi.views.oauth_callback import oauth_google_callback
 
 # The first parameter, r'userinfo, is setting up the url.
 # The second UserInfoView is telling the server which view to use when it sees that url.
@@ -23,4 +24,6 @@ urlpatterns = [
     path("stylist-services", StylistServiceLinks.as_view()),
     path("service-stylist-options", ServiceStylistOptions.as_view()),
     path("oauth/google/initiate", oauth_google_initiate),
+    # the trailing slash is important below (in callback) because google will redirect to this exact url with the code query param added onto the end
+    path("oauth/google/callback/", oauth_google_callback)
 ]
