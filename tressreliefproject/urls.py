@@ -24,5 +24,6 @@ urlpatterns = [
     path("stylist-services", StylistServiceLinks.as_view()),
     path("service-stylist-options", ServiceStylistOptions.as_view()),
     path("oauth/google/initiate", oauth_google_initiate),
-    path("oauth/google/callback", oauth_google_callback)
+    # the trailing slash is important below (in callback) because google will redirect to this exact url with the code query param added onto the end
+    path("oauth/google/callback/", oauth_google_callback)
 ]

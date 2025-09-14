@@ -45,6 +45,6 @@ def oauth_google_initiate(request):
 # &include_granted_scopes=true
 # &prompt=consent
 
-# front-end will call this endpoint (when a stylist clicks a button to connect their Google Calendar), get back the conxsent url, and redirect the stylist to it
+# front-end will call this endpoint (when a stylist clicks a button to connect their Google Calendar), get back the consent url, and redirect the stylist to it
 # stylist will log in to google and approve the requested permissions
 # after the user clicks allow, then google will redirect to my redirect uri (which i set in google cloud console), which i will make an endpoint for next

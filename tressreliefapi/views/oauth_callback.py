@@ -10,8 +10,11 @@ from rest_framework import status
 from tressreliefproject import settings
 from django.utils import timezone
 from datetime import timedelta
-from models.user_info import UserInfo
-from models.oauth_credential import OauthCredential
+from tressreliefapi.models.user_info import UserInfo
+from tressreliefapi.models.oauth_credential import OAuthCredential
+from rest_framework.decorators import api_view
+
+# /oauth/google/callback/?code=:<code>/
 
 
 @api_view(['GET'])
@@ -21,7 +24,7 @@ def oauth_google_callback(request):
     Exchanges the code for tokens and saves them in OauthCredential model 
     """
 
-    # 1. Grab the code that Google sends me in the query parameters
+    # 1. Grab the code that Google sends me in the query parameters.
     code = request.query_params.get("code")
     if not code:
         return Response({"error": "Missing Code"}, status=status.HTTP_400_BAD_REQUEST)
@@ -60,19 +63,29 @@ def oauth_google_callback(request):
     if not stylist:
         return Response({"error": "No stylist found"}, status=status.HTTP_400_BAD_REQUEST)
 
-    # 4. TODO: Save in DB
+    # 4. Save in DB
     # The update_or_create method returns a tuple (obj, created) , where obj in the object, and created is a boolean showing whether a new object was created.
-    credentials, created = OauthCredential.objects.update_or_create(
+    credentials, created = OAuthCredential.objects.update_or_create(
+        # since user and provier have a unuique constraint in the model they're guaranteed to only match one row. so they are the lookup fields we use here.
         user=stylist,
         provider='google',
+        # update_or_create will try to find a row matching the lookup fields (user + provider), and if found, update it with the values in defaults. if not found, create a new row with the lookup fields + defaults
+        # the below fields (defaults: access_token, token_expiry, refresh_token, calendar_id) are not lookup fields because they don't have the unique constraint in the model / can change over time
         defaults={
             'access_token': access_token,
             'token_expiry': expiry,
             # only save refresh_token if present. google someties doesn't send it if the user has already connected before. don't overwrite an existing refresh token with None!
-            # ** is like the spread operator in js, it spreads the key/value pairs of an object into another object
+            # ** is like the spread (...) operator in js, it spreads the key/value pairs of an object into another object
             **({'refresh_token': refresh_token} if 'refresh_token' else {}),
             'calendar_id': 'primary'
         }
     )
 
-    # 5. TODO: send a response back to the front-end (maybe just a success message for now) (later (TODO) may redirect front-end)
+    # 5. send a response back to the front-end  (just a success message for now) (later (TODO) may redirect front-end)
+
+    return Response({
+        "connected": True,
+        "stylist_id": stylist.id,
+        "token_expiry": expiry,
+        "has_refresh": bool(credentials.refresh_token),
+    })
