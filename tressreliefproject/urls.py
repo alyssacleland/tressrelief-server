@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from tressreliefapi.views import get_or_create_user, UserInfoView, CategoryView, ServiceView
+from tressreliefapi.views import get_or_create_user, UserInfoView, CategoryView, ServiceView, OAuthCredentialViewSet
 from tressreliefapi.views.service_stylists_options import ServiceStylistOptions
 from tressreliefapi.views.stylist_service import StylistServiceLinks
 from tressreliefapi.views.oauth import oauth_google_initiate
@@ -15,6 +15,9 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'userinfo', UserInfoView, 'userinfo')
 router.register(r'categories', CategoryView, 'category')
 router.register(r'services', ServiceView, 'service')
+router.register(r'oauth-credentials',
+                OAuthCredentialViewSet, 'oauthcredential')
+
 
 # Each path() in urlpatterns is mapping a URL pattern to a view — which is just the code that runs when someone visits that URL.
 urlpatterns = [

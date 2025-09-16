@@ -4,3 +4,4 @@ from .category import CategoryView
 from .service import ServiceView
 from .oauth import oauth_google_initiate
 from .oauth_callback import oauth_google_callback
+from .oauth_credential import OAuthCredentialViewSet
