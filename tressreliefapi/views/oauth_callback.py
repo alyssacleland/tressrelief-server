@@ -1,3 +1,5 @@
+# This endpoint is used to handle the callback from Google's OAuth service after a user has authenticated. It processes the authorization code received from Google and typically exchanges it for an access token.
+
 # this is the endpoint that google will redirect to after the user consents (or doesn't) from the oauth_google_initiate view
 # i will need to exchange the authorization code that google sends me for access and refresh tokens
 
@@ -55,9 +57,10 @@ def oauth_google_callback(request):
     refresh_token = token_data.get("refresh_token")
     expires_in = token_data.get("expires_in")  # in seconds
 
+    # .now() is in local timezone, utcnow() is in utc timezone. need to use django timezone utils to avoid naive vs aware datetime issues. https://docs.djangoproject.com/en/4.2/topics/i18n/timezones/#utilities
     expiry = timezone.now() + timezone.timedelta(seconds=expires_in)
 
-    # 3. for now, assume current user is the first stylist in the db (later (TODO) will get user from auth token in request header)
+    # 3. for now, assume current user is the first stylist in the db (later (TODO:) will get user from auth token in request header)
     # first() gets the first object in the queryset
     stylist = UserInfo.objects.filter(role="stylist").first()
     if not stylist:
@@ -76,7 +79,7 @@ def oauth_google_callback(request):
             'token_expiry': expiry,
             # only save refresh_token if present. google someties doesn't send it if the user has already connected before. don't overwrite an existing refresh token with None!
             # ** is like the spread (...) operator in js, it spreads the key/value pairs of an object into another object
-            **({'refresh_token': refresh_token} if 'refresh_token' else {}),
+            **({'refresh_token': refresh_token} if refresh_token else {}),
             'calendar_id': 'primary'
         }
     )

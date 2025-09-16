@@ -5,6 +5,8 @@ from .user_info import UserInfo
 # 1.) read the stylists busy times and generate available slots for clients
 # 2.) create/update/cancel events on the stylists calendar
 
+# DOCS: https://developers.google.com/identity/protocols/oauth2/web-server#offline
+
 
 class OAuthCredential(models.Model):
     # links the credentials to which stylist they belong to
