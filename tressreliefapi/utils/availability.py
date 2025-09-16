@@ -2,7 +2,6 @@
 
 from datetime import datetime, time, timedelta
 import pytz
-from django.utils import timezone
 
 # FreeBusy API will give me a list of time ranges when the stylist is busy, represented as start and end datetimes in UTC. E.g.,
 # busy_intervals = [(start_time_utc, end_time_utc), ...]
@@ -52,17 +51,41 @@ def generate_available_slots(service_duration, busy_intervals, date, slot_granul
         datetime.combine(date, time(17, 0)))  # 5:00 PM CST
 
     # 2.) Convert above to UTC for comparison with busy times from Google Calendar
-    day_start_ct = day_start_ct.astimezone(pytz.utc)
-    day_end_ct = day_end_ct.astimezone(pytz.utc)
+    day_start = day_start_ct.astimezone(pytz.utc)
+    day_end = day_end_ct.astimezone(pytz.utc)
 
     # 3.) Busy intervals may not be in order or may overlap, so first merge any overlapping busy intervals, and then sort them by start time (via helper function above).
     busy_intervals = normalize_intervals(busy_intervals)
 
     # 4.) Subtract busy intervals from working hours to get free time intervals
     free_intervals = []
+    current_start = day_start  # start with the beginning of the work day
+    for start, end in busy_intervals:
+        # if opening time is less than (before) the busy interval's start time, then there's free time from current_start to the start of the busy interval, so add that as a free interval (it will be the gap before the busy interval). Note to self: I also drew a diagram to understand this logic, refer back to it if confused. pic taken on iphone 091625
+        if current_start < start:
+            free_intervals.append((current_start, start))
+        # move the current_start forward to the end of the busy interval (if it's later than the current_start, which it always should be given my setup... but this is a safty net i guess so we don't accidentally reset current_start backwards... it can only move farwards.)
+        if end > current_start:  # safety check, this should always be true given my setup
+            current_start = end
 
     # 5.) After the last busy interval, there might still be free time until day_end, so add that as a free interval if applicable.
+    if current_start < day_end:
+        free_intervals.append((current_start, day_end))
 
     # 6. Slice the free intervals into into bookable slots that match the service's duration
+    slots = []
+    step = timedelta(minutes=slot_granularity)  # default is 15 min increments
+    for free_start, free_end in free_intervals:
+        slot_start = free_start
+        # while the slot (from slot_start to slot_start + service_duration) fits within the free interval
+        while slot_start + timedelta(minutes=service_duration) <= free_end:
+          # set the slot end time
+            slot_end = slot_start + timedelta(minutes=service_duration)
+            # add the slot to the list
+            slots.append((slot_start, slot_end))
+            # move the slot_start forward by the step (default 15 min)
+            # note: this means slots can overlap if service_duration > slot_granularity (true for  most if not all hair services)
+            slot_start += step
 
     # 7.) Return all the slots (in UTC since that's how we store times in the DB)
+    return slots
