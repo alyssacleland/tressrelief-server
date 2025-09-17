@@ -15,6 +15,7 @@ from datetime import timedelta
 from tressreliefapi.models.user_info import UserInfo
 from tressreliefapi.models.oauth_credential import OAuthCredential
 from rest_framework.decorators import api_view
+from django.shortcuts import redirect
 
 # /oauth/google/callback/?code=:<code>/
 
@@ -28,6 +29,11 @@ def oauth_google_callback(request):
 
     # 1. Grab the code that Google sends me in the query parameters.
     code = request.query_params.get("code")
+    # and the state param i sent in initiate (which is the stylist's uid so i know who this is for)
+    uid = request.query_params.get("state")  # comes back from initiate
+    if not code or not uid:
+        return Response({"error": "Missing code or state"}, status=status.HTTP_400_BAD_REQUEST)
+
     if not code:
         return Response({"error": "Missing Code"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -60,11 +66,11 @@ def oauth_google_callback(request):
     # .now() is in local timezone, utcnow() is in utc timezone. need to use django timezone utils to avoid naive vs aware datetime issues. https://docs.djangoproject.com/en/4.2/topics/i18n/timezones/#utilities
     expiry = timezone.now() + timezone.timedelta(seconds=expires_in)
 
-    # 3. for now, assume current user is the first stylist in the db (later (TODO:) will get user from auth token in request header)
-    # first() gets the first object in the queryset
-    stylist = UserInfo.objects.filter(role="stylist").first()
-    if not stylist:
-        return Response({"error": "No stylist found"}, status=status.HTTP_400_BAD_REQUEST)
+    # 3. Look up the stylist by the uid I passed through the flow in the state param
+    try:
+        stylist = UserInfo.objects.get(uid=uid)
+    except UserInfo.DoesNotExist:
+        return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
     # 4. Save in DB
     # The update_or_create method returns a tuple (obj, created) , where obj in the object, and created is a boolean showing whether a new object was created.
@@ -84,11 +90,12 @@ def oauth_google_callback(request):
         }
     )
 
-    # 5. send a response back to the front-end  (just a success message for now) (later (TODO) may redirect front-end)
+    # 5. Redirect back to FE
+    return redirect("http://localhost:3000/stylists")
 
-    return Response({
-        "connected": True,
-        "stylist_id": stylist.id,
-        "token_expiry": expiry,
-        "has_refresh": bool(credentials.refresh_token),
-    })
+    # return Response({
+    #     "connected": True,
+    #     "stylist_id": stylist.id,
+    #     "token_expiry": expiry,
+    #     "has_refresh": bool(credentials.refresh_token),
+    # })
