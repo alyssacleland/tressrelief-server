@@ -42,6 +42,7 @@ def generate_available_slots(service_duration, busy_intervals, date, slot_granul
     """ Turns a list of busy intervals into available slots for booking.
     """
     # 1.) Define working hours for a day in CST
+    # we enforce this here because a stylist may have availability outside of working hours (e.g., 11pm), but we don't want to show those times to clients
     central = pytz.timezone('America/Chicago')  # Central Time Zone object
     # central.localize() makes a naive datetime (no timezone info) into an aware datetime (with timezone info)
     # combine() makes a datetime from a date object and a time object
