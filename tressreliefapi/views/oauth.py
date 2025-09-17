@@ -1,3 +1,5 @@
+# This endpoint initiates the Google OAuth authentication process. It is designed to redirect users to Google's authentication page, allowing them to log in and authorize your application to access their Google account information.
+
 from urllib.parse import urlencode
 from django.conf import settings
 from django.http import JsonResponse
@@ -18,6 +20,12 @@ def oauth_google_initiate(request):
     """ Initiate the OAuth2 flow by redirecting to Google's OAuth 2.0 server
         to obtain user consent for the requested scopes.
         Returns a JSON response containing the URL to redirect the user to."""
+
+    # get the stylist's uid from the Authorization header (set by the front-end)
+    uid = request.headers.get("Authorization")
+    if not uid:
+        return JsonResponse({"error": "Missing Authorization header"}, status=401)
+
     params = {
         # OAuth client ID i got from google cloud
         "client_id": settings.GOOGLE_CLIENT_ID,
@@ -31,6 +39,7 @@ def oauth_google_initiate(request):
         "access_type": "offline",
         # forces the consent screen to always show (to get refresh token each time)
         "prompt": "consent",
+        "state": uid,  # will pass the stylist's uid through the flow so i know who it is in the callback
     }
     url = f"https://accounts.google.com/o/oauth2/v2/auth?{urlencode(params)}"
     return JsonResponse({"url": url})
@@ -47,4 +56,4 @@ def oauth_google_initiate(request):
 
 # front-end will call this endpoint (when a stylist clicks a button to connect their Google Calendar), get back the consent url, and redirect the stylist to it
 # stylist will log in to google and approve the requested permissions
-# after the user clicks allow, then google will redirect to my redirect uri (which i set in google cloud console), which i will make an endpoint for next
+# after the user clicks allow, then google will redirect to my redirect uri (which i set in google cloud console), which is the oauth_google_callback endpoint

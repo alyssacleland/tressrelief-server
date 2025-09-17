@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 from tressreliefapi.views import get_or_create_user, UserInfoView, CategoryView, ServiceView, OAuthCredentialViewSet
+from tressreliefapi.views.oauth_status import oauth_google_status
 from tressreliefapi.views.service_stylists_options import ServiceStylistOptions
 from tressreliefapi.views.stylist_service import StylistServiceLinks
 from tressreliefapi.views.oauth import oauth_google_initiate
@@ -28,5 +29,6 @@ urlpatterns = [
     path("service-stylist-options", ServiceStylistOptions.as_view()),
     path("oauth/google/initiate", oauth_google_initiate),
     # the trailing slash is important below (in callback) because google will redirect to this exact url with the code query param added onto the end
-    path("oauth/google/callback/", oauth_google_callback)
+    path("oauth/google/callback/", oauth_google_callback),
+    path("oauth/google/status", oauth_google_status),
 ]
